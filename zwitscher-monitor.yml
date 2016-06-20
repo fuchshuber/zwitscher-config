@@ -1,0 +1,33 @@
+turbine:
+  appConfig: zwitscher-service,zwitscher-board
+  instanceUrlSuffix: /admin/hystrix.stream
+  clusterNameExpression: appGroupName
+  aggregator:
+    clusterConfig: ZWITSCHER
+
+endpoints:
+  info:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    enabled: true
+    sensitive: false
+
+logging:
+  level:
+    com.netflix.discovery: INFO
+    com.netflix.turbine: INFO
+    org.springframework.cloud: INFO
+    org.springframework.web: INFO
+
+management:
+  context-path: /admin
+
+eureka:
+  instance:
+    # register with IP addresses (required for deployment in Kubernetes?)
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: ${management.context-path}/info
+    healthCheckUrlPath: ${management.context-path}/health
